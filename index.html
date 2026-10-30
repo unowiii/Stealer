@@ -301,6 +301,13 @@ const BG_FALLBACK={bg2_street:'bg_eastgate',bg2_bindery:'bg_workshop',bg2_post:'
 const BG3=(window.__BG3&&window.__BG3.fallback)||{};
 const A=n=>{ if(!window.ASSETS) return ''; if(ASSETS[n]) return ASSETS[n]; let f=BG_FALLBACK[n]||BG3[n]; let guard=0; while(f&&!ASSETS[f]&&guard++<4) f=BG_FALLBACK[f]||BG3[f]; return (f&&ASSETS[f])||''; };
 const E=window.ENGINE={};
+/* 旧存档兼容：黑皮本子第一行改了措辞，读档/读衔接存档前把旧句子换成新句子 */
+const OLD_NOTE='罗德成，第五天，放我过去。', NEW_NOTE='罗德成，第五天那回是他放我过去的。';
+const fixNames=f=>{ if(!f) return f; ['names','ch1Names'].forEach(k=>{ if(Array.isArray(f[k])) f[k]=f[k].map(x=>x===OLD_NOTE?NEW_NOTE:x).filter((x,i,a)=>x!==NEW_NOTE||a.indexOf(x)===i); }); return f; };
+E.fixNames=fixNames;
+try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(!k||k.indexOf('touxin')!==0) continue; const v=localStorage.getItem(k); if(!v||v.indexOf(OLD_NOTE)<0) continue;
+  try{ const o=JSON.parse(v); const walk=x=>{ if(x&&typeof x==='object'){ if(x.flags) fixNames(x.flags); fixNames(x); Object.keys(x).forEach(z=>{ if(x[z]&&typeof x[z]==='object') walk(x[z]); }); } }; walk(o); localStorage.setItem(k,JSON.stringify(o)); }
+  catch(e){ localStorage.setItem(k,v.split(OLD_NOTE).join(NEW_NOTE)); } } }catch(e){}
 E.CHAPTERS=window.CHAPTERS||{};
 let CH=null, S=null;
 const META_KEY='touxin_meta_v1', SAVE_KEY='touxin_save_v1_';
@@ -737,7 +744,7 @@ function openSave(mode){
 let CHECK=null;
 function checkpoint(){ CHECK=clone(S); writeSave('auto'); }
 function writeSave(k){ if(!CHECK) return; localStorage.setItem(SAVE_KEY+k,JSON.stringify({at:Date.now(),s:CHECK})); }
-function loadSave(k){ const inf=slotInfo(k); if(!inf) return; S=inf.s; CH=E.CHAPTERS[S.ch]; E.S=S; $('#title').classList.remove('on'); clearChars(); hideDlg(); $('#choices').classList.remove('on'); RUN++; 
+function loadSave(k){ const inf=slotInfo(k); if(!inf) return; S=inf.s; if(S&&S.flags) fixNames(S.flags); CH=E.CHAPTERS[S.ch]; E.S=S; $('#title').classList.remove('on'); clearChars(); hideDlg(); $('#choices').classList.remove('on'); RUN++; 
   if(S.inHub) showHub(); else startPhase(S.phase); }
 E.openSave=openSave; E.loadSave=loadSave;
 
@@ -2341,8 +2348,8 @@ const luo=[
   n('我又去了几个他干过的宴会厅。最后是一家会所，前台的人想了很久，说十来年前是有一个姓罗的领班，有个侍应偷了客人的表，领班管着侍应，跟着受了点牵连。'),
   n('我回到仓库跟Hyunjae说了。他在灶台边上切葱，刀停在半空，站了很久，然后把那半根葱切完了，切得很细。'),
   s('hyunjae','我想起来了，那天他也在。'),
-  n('那天晚上，我在本子的第一页写下他的名字，罗德成，后面写：第五天，放我过去。后来每换一个新本子，我都先把这一行抄到第一页。我一直没找到他。'),
-  S=>{ S.flags.names=S.flags.names||[]; if(!S.flags.names.includes('罗德成，第五天，放我过去。')) S.flags.names.unshift('罗德成，第五天，放我过去。'); },
+  n('那天晚上，我在本子的第一页写下一行字：罗德成，第五天那回是他放我过去的。后来每换一个新本子，我都先把这一行抄到第一页。我一直没找到他。'),
+  S=>{ S.flags.names=S.flags.names||[]; if(!S.flags.names.includes('罗德成，第五天那回是他放我过去的。')) S.flags.names.unshift('罗德成，第五天那回是他放我过去的。'); },
 ];
 const shen=[
   n('后来我自己又去过一次那间监控室。照片全撤了，墙上只剩一排钉眼。桌上的灰里有一圈对讲机压出来的印子，机器不在了。印子旁边放着一张纸，字跟第七天那张纸条出自同一只手：东西守到认领为止。剩下的，你们自己长成能守住它的人。'),
@@ -2533,7 +2540,7 @@ const ICON2={
 const cast={};
 Object.keys(A1.cast).forEach(k=>{ const c=A1.cast[k]; if(c.member) cast[k]=Object.assign({},c,{metFlag:null}); });
 Object.assign(cast.leader,{note:'说话的时候两手背在身后。那天投票，他是最后一个表态的，往常他总是头一个。'});
-Object.assign(cast.sunwoo,{note:'他做的每一件东西都刻号，从十七开始。说话越像在报时间，事情就越大。'});
+Object.assign(cast.sunwoo,{note:'他做的每一件东西都刻号，从十七开始。他哪天说话一板一眼的，多半是真出事了。'});
 Object.assign(cast.hyunjae,{note:'带了三个保温箱，一个装饭，一个装汤，一个装他自己的。'});
 Object.assign(cast.juyeon,{note:'「我跟着去。」他没说跟着谁。'});
 Object.assign(cast.younghoon,{note:'给每个人做身份。那本借名簿从不拿出来。'});
@@ -3106,7 +3113,7 @@ P.c1a={label:'一 · 停在四十一分',dayLabel:'一',time:'清晨',place:'屿
   S=>S.flags.bridge||[],
   n('散伙饭之后的三个月，我回档案公司上了班。'),
   n('是我自己去找的原来那个主管。他翻了翻我的离职单，说空缺还在，就是要重新试用，录入量也比以前加了。我没争，坐回原来那个靠窗的位置上，接着录别人的认领书。'),
-  n('本子换了第二本。第一本抄满了，放在床头的抽屉里，和那张旧展签、Younghoon给我的那张侧脸、两枚黑棋子放在一起。第二本是在文具店买的，黑皮，没有烫金字，第一页我先写了那一行：罗德成，第五天，放我过去。'),
+  n('本子换了第二本。第一本抄满了，放在床头的抽屉里，和那张旧展签、Younghoon给我的那张侧脸、两枚黑棋子放在一起。第二本是在文具店买的，黑皮，没有烫金字，第一页我先写了那一行：罗德成，第五天那回是他放我过去的。'),
   n('我又去找过他两回。一回是城北一家新开的酒店招宴会领班，人家说来应聘的人里没有姓罗的。还有一回在公交上，我看见一个白头发的男人，背影很像，我跟着下了车，跟了两条街，他转过身来，是另一张脸。'),
   n('心脏在公证处的保管库里，保管凭证夹在第二本本子的封底。我一次也没去看过它。'),
   n('周末我还是去仓库。Hyunjae每个周六中午都做饭，做十二份，到了的人吃，没到的那份他第二天给人带过去。Eric几乎每周都到，他在一家物流公司找了份分拣的夜班，那种活不查行业名单。他瘦了一点，可每次进门还是先冲每个人笑一下。'),
@@ -3115,7 +3122,7 @@ P.c1a={label:'一 · 停在四十一分',dayLabel:'一',time:'清晨',place:'屿
   {sfx:'radio'},
   n('Sunwoo打电话来的时候天还没亮。他没提钟，只问：'),
   s('sunwoo','你能过来一趟吗？'),
-  i('他平时说话越不着调，事情越小，说得越像在报时间，事情就越大。'),
+  i('他平时嘴上没个正形的时候，一般都是小事。哪天他说话一板一眼的，那多半是真出事了。'),
   {bg:'bg2_clock'},
   n('仓库还是那间仓库，灯开了一半。钟摆在长桌正中，背面十二个上弦孔，每一个边上都被手指磨出了一圈亮。'),
   n('指针停在第八道线和第九道线之间，偏九一点。'),
@@ -3149,7 +3156,7 @@ P.c1a={label:'一 · 停在四十一分',dayLabel:'一',time:'清晨',place:'屿
   {inspect:'letter'},
   n('团长把信纸顺着原来的折痕折好，放回信封，一直没说话。'),
   s('eric','这口气……'),
-  n('他说着自己先笑了半下，那半下没垫住后面的话，就散了。'),
+  n('他说完自己先笑了一声，笑得有点干，后面的话就没再接下去。'),
   n('投票在中午。'),
   s('q','我的脸在档城的系统里有旧档，十年前的事了。与其等着人拿旧账找上门，不如我自己先把新账翻开。'),
   n('Eric看了他一眼，也投了接。Hyunjae先投了缓，又把信看了一遍，看到落款，改成了接。'),
@@ -3548,7 +3555,7 @@ P.c6={label:'六 · 恒温库',dayLabel:'六',time:'上午',place:'档案馆 · 
   ...needDed('seven',null,'jacob','你记得白板吗？'),
   n('Jacob也在看我。他没问我在想什么。他早就知道我会看见什么，所以才申请了两个额度。'),
   me('你父亲知道这个人是谁吗？'),
-  s('jacob','他知道是福利院的孩子，十六岁。他在笔记本上写了一句，说那孩子问年龄写在哪儿，他说不用写。他记了一辈子账，就这一句是多写的。'),
+  s('jacob','他知道那孩子是福利院出来的，才十六岁。孩子问他年龄要填在哪儿，他说不用填，回去还把这件事记在了笔记本上。他记了一辈子账，只有这一句跟账没关系。'),
   n('Jacob把原件推回匣子里。管理员要封存，他拦了一下。'),
   s('jacob','封存可以，可我要留一条记录，写明今天有人看过它，看的人是我。'),
   s('keeper','看过就封，这是规矩，用不着留记录。'),
@@ -5444,7 +5451,7 @@ E.EXTRAS.aftermath={id:'aftermath',title:'余波',who:'全员',group:'合册之�
     n('女人低头想了很久，说她父亲那时候厂子倒了，欠了很多钱，就把画押给了人，说过几年就赎回来，结果一直没赎回来，到死都没提一个字。团长问她能把这些话写在纸上签个字吗，她说能。'),
     n('那天晚上，他把那张声明收进了册子，写得很慢，写完抬头看了一眼那幅画的照片。'),
     s('leader','这件事我不收钱。这回是还回去，还东西不该收钱，往后我大概就干这个了。'),
-    n('最后一件事，是我把第四本本子的第一行又写了一遍。罗德成，第五天，放我过去。他一直没回来，我还是照样写。'),
+    n('最后一件事，是我把第四本本子的第一行又写了一遍。罗德成，第五天那回是他放我过去的。他一直没回来，我还是照样写。'),
     n('（余波 · 完）'),{softEnd:1}
   ]};
 
@@ -6213,7 +6220,7 @@ P.c9={label:'九 · 合册',dayLabel:'九',time:'傍晚',place:'立册库',card:
   B.leaderNight,
   B.jacob,
   n('对账人后来复职了。沈眠退下来那天，老纪把那把刀包好，收回了布包里。Younghoon在增补页草稿的封面上写了三个字，写完拿给团长看，团长看了，没让改。'),
-  n('我出了门，口袋里的本子已经换成了第四本，第一页还是那一行：罗德成，第五天，放我过去。'),
+  n('我出了门，口袋里的本子已经换成了第四本，第一页还是那一行：罗德成，第五天那回是他放我过去的。'),
   n('走到街口，我回头看了一眼。仓库的灯还亮着，隔着窗户能看见Juyeon在钟后面一格一格地上弦，上得很慢。'),
   {end:true},
  ]};
