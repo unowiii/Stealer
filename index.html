@@ -285,7 +285,7 @@ clear:function(){mem={};try{if(real)real.clear();}catch(e){}},
 key:function(i){try{if(real)return real.key(i);}catch(e){}return Object.keys(mem)[i]||null;}};
 Object.defineProperty(safe,'length',{get:function(){try{if(real)return real.length;}catch(e){}return Object.keys(mem).length;}});
 try{Object.defineProperty(window,'localStorage',{configurable:true,get:function(){return safe;}});}catch(e){window.__errs.push('ls-shim:'+e);}})();</script>
-    <script>window.ASSETS={"bg2_auction": "assets/p01.webp", "bg2_bindery": "assets/p02.webp", "bg2_box": "assets/p03.webp", "bg2_clock": "assets/p04.webp", "bg2_dark": "assets/p05.webp", "bg2_ji": "assets/p06.webp", "bg2_noodle": "assets/p07.webp", "bg2_post": "assets/p08.webp", "bg2_shen": "assets/p09.webp", "bg2_station": "assets/p10.webp", "bg2_street": "assets/p11.webp", "bg2_tea": "assets/p12.webp", "bg2_title": "assets/p13.webp", "bg2_vault": "assets/p14.webp", "bg_archive": "assets/p15.webp", "bg_corridor": "assets/p16.webp", "bg_eastgate": "assets/p17.webp", "bg_ending": "assets/p18.webp", "bg_gallery": "assets/p19.webp", "bg_lobby": "assets/p20.webp", "bg_monitor": "assets/p21.webp", "bg_power": "assets/p22.webp", "bg_warehouse": "assets/p23.webp", "bg_workshop": "assets/p24.webp", "title": "assets/p25.webp"};
+    <script>window.ASSETS={"bg2_auction": "assets/p01.webp", "bg2_bindery": "assets/p02.webp", "bg2_box": "assets/p03.webp", "bg2_clock": "assets/p04.webp", "bg2_dark": "assets/p05.webp", "bg2_ji": "assets/p06.webp", "bg2_noodle": "assets/p07.webp", "bg2_post": "assets/p08.webp", "bg2_shen": "assets/p09.webp", "bg2_station": "assets/p10.webp", "bg2_street": "assets/p11.webp", "bg2_tea": "assets/p12.webp", "bg2_title": "assets/p13.webp", "bg2_vault": "assets/p14.webp", "bg3_alley": "assets/p36.webp", "bg3_bus": "assets/p37.webp", "bg3_darkroom": "assets/p38.webp", "bg3_eatery": "assets/p39.webp", "bg3_entrance": "assets/p40.webp", "bg3_jitable": "assets/p41.webp", "bg3_lockshop": "assets/p42.webp", "bg3_longtable": "assets/p43.webp", "bg3_notice": "assets/p44.webp", "bg3_orphanage": "assets/p45.webp", "bg3_revisions": "assets/p46.webp", "bg3_roof": "assets/p47.webp", "bg3_stacks": "assets/p48.webp", "bg3_warehouse_night": "assets/p49.webp", "bg3_whitepage": "assets/p50.webp", "bg3_winter": "assets/p51.webp", "bg_archive": "assets/p15.webp", "bg_corridor": "assets/p16.webp", "bg_eastgate": "assets/p17.webp", "bg_ending": "assets/p18.webp", "bg_gallery": "assets/p19.webp", "bg_lobby": "assets/p20.webp", "bg_monitor": "assets/p21.webp", "bg_power": "assets/p22.webp", "bg_warehouse": "assets/p23.webp", "bg_workshop": "assets/p24.webp", "title": "assets/p25.webp"};
 window.__BG3={"fallback": {"bg3_entrance": "bg2_vault", "bg3_stacks": "bg2_vault", "bg3_whitepage": "bg_archive", "bg3_revisions": "bg_archive", "bg3_longtable": "bg2_vault", "bg3_notice": "bg2_vault", "bg3_roof": "bg2_noodle", "bg3_jitable": "bg2_ji", "bg3_alley": "bg2_street", "bg3_bus": "bg2_station", "bg3_warehouse_night": "bg_warehouse", "bg3_winter": "bg_warehouse", "bg3_lockshop": "bg2_street", "bg3_eatery": "bg2_noodle", "bg3_darkroom": "bg2_dark", "bg3_orphanage": "bg2_street"}};
 Object.assign(window.ASSETS,{"ph_leader": "assets/p26.jpg", "ph_jacob": "assets/p27.jpg", "ph_younghoon": "assets/p28.jpg", "ph_hyunjae": "assets/p29.jpg", "ph_juyeon": "assets/p30.jpg", "ph_kevin": "assets/p31.jpg", "ph_new": "assets/p32.jpg", "ph_q": "assets/p33.jpg", "ph_sunwoo": "assets/p34.jpg", "ph_eric": "assets/p35.jpg"});window.PHOTO_FOCUS={"leader": [50, 25], "jacob": [50, 25], "younghoon": [50, 20], "hyunjae": [50, 40], "juyeon": [50, 30], "kevin": [45, 18], "new": [40, 30], "q": [45, 30], "sunwoo": [30, 35], "eric": [50, 30]};
 
@@ -1358,7 +1358,11 @@ pre:[
   s('sunwoo','你问这个，是想让我夸你问得好吗？'),
   n('那人笑骂了一声，他已经接着看他的图去了。'),
   n('给我递水的就是开车的那个人。他笑起来特别好看，问我淋着没有，路上堵不堵，饿不饿。'),
-  s('hyunjae','这附近有家炸鸡，半夜才关门，现在去还来得及。你要辣的还是不辣的？我猜你是不吃辣的那种。'),
+  s('hyunjae','这附近有家炸鸡，半夜才关门，现在去还来得及。你要辣的还是不辣的？'),
+  {p:'',c:[
+    {t:'「辣的。」',tone:'soft',set:{likeSpice:1},tr:{hyunjae:1},then:[s('hyunjae','行，那我多点一份辣的。')]},
+    {t:'「不辣的。」',tone:'soft',set:{likeSpice:0},tr:{hyunjae:1},then:[s('hyunjae','好，不辣的给你留着。')]},
+  ]},
   n('大家叫他Hyunjae。他说了一晚上吃的，哪家的粥熬得够久，哪家的炒河粉锅气足，可他自己那只保温杯从进门起就没离过手。有人分他一块巧克力，他接过来说了声谢谢，揣进兜里，再没拿出来。'),
   n('离门最近的是昨晚给我开门的大个子，叫Juyeon。他进门后背对着所有人把门锁摸了一遍，又低头看了眼门缝，才走回来坐下。别人讲计划，他听得很慢，常常隔两三句才「嗯」一声。可一整晚，他的视线隔一阵就往门那边去一次。'),
   n('还有一个人，袖口别着一枚铜徽章。它别反了，是美术馆的馆徽，字朝里，背面朝外。他说话轻，偶尔夹一两个英文词，替最小的那个孩子把外套从椅背上捡起来挂好，动作顺手得很。他们叫他Jacob。'),
@@ -1375,15 +1379,20 @@ pre:[
   ]},
   {if:S=>S.flags.overhear==='quiet',then:[n('我接满水，从另一头绕回座位。水是凉的，我喝了好几口才觉出凉来。从白板后面走出来的是Q和Jacob，一前一后，隔了一小会儿。')]},
   n('Q回到座位上，把那块蜡捏得扁扁的，按在桌面上留下一个方印，又用拇指抹平了。'),
-  n('Hyunjae端来炸鸡，一人一盒，不辣的那盒放在我面前。他自己没有。'),
+  {if:S=>S.flags.likeSpice===1,then:[
+    n('Hyunjae端来炸鸡，一人一盒，辣的那盒放在我面前。他自己没有。'),
+    s('hyunjae','你说要辣的，我跟店里说了多放一点。'),
+  ],else:[
+    n('Hyunjae端来炸鸡，一人一盒，不辣的那盒放在我面前。他自己没有。'),
+  ]},
   {p:'',c:[
     {t:'「你自己不吃吗？」',tone:'soft',tr:{hyunjae:1},then:[s('hyunjae','我来之前吃过了。'),n('他说着拧开保温杯喝了一口，里面是他自己带的粥，我闻到了米和姜的味道。')]},
     {t:'（低头吃。）',tone:'cold',then:[n('他拧开保温杯喝了一口，里面是他自己带的粥，我闻到了米和姜的味道。')]},
   ]},
   s('leader','明天去踩点，你带一个人，自己挑。'),
   {p:'带谁去？',c:[
-    {t:'Jacob：「我要看保安的班次表。」',tone:'cold',set:{partner:'jacob'},tr:{jacob:1}},
-    {t:'「我一个人去。」',tone:'sharp',then:[s('leader','带一个人，自己挑。'),n('我挑了Jacob。'),{set:{partner:'jacob'}}]},
+    {t:'Jacob：「我要看保安的班次表。」',tone:'cold',set:{partner:'jacob',carryAlone:0},tr:{jacob:1}},
+    {t:'「我一个人去。」',tone:'sharp',set:{carryAlone:1},then:[s('leader','带一个人，自己挑。'),n('我挑了Jacob。'),{set:{partner:'jacob'}}]},
   ]},
   i('他是屋里唯一戴着美术馆徽章的人。另外两个理由我没说。一个是他会答应，另一个是，他那枚别反的徽章，是这屋里唯一跟「出处不明」四个字沾边的东西。'),
   n('Jacob看了团长一眼，团长没表态。Jacob就笑了笑。'),
@@ -1452,10 +1461,16 @@ pre:[
   s('eric','你能不能讲慢一点？'),
   s('sunwoo','讲慢了，你就会以为自己记住了。我讲快了你记不住，才会自己低头去看图。'),
   n('Eric看了他一眼，低头看图去了。'),
-  n('中午Hyunjae出去了一趟，回来拎着两大袋外卖，一份一份摆在长桌上。谁的不要葱，谁的多放辣，谁的米饭要少，他一份都没摆错。我那份是一碗汤面，没放香菜。'),
+  n('中午Hyunjae出去了一趟，回来拎着两大袋外卖，一份一份摆在长桌上。谁的不要葱，谁的多放辣，谁的米饭要少，他一份都没摆错。到我这份汤面时，他停了一下，看着我。'),
   {p:'',c:[
-    {t:'「我好像没跟你说过我不吃香菜。」',tone:'soft',tr:{hyunjae:1},then:[s('hyunjae','你昨晚把炸鸡上的欧芹全挑出来了，挑得那么仔细，我就猜你也不吃香菜。')]},
-    {t:'（低头吃面。）',tone:'cold'},
+    {t:'「香菜给我加点。」',tone:'soft',set:{likeCilantro:1},tr:{hyunjae:1},then:[
+      n('他从袋子里摸出一小盒香菜，搁在碗边。'),
+      s('hyunjae','我刚才特意问了店里有没有，就怕你要。'),
+    ]},
+    {t:'「香菜别放我碗里。」',tone:'soft',set:{likeCilantro:0},tr:{hyunjae:1},then:[
+      n('我那份汤面没放香菜。'),
+      s('hyunjae','你昨晚把炸鸡上的欧芹全挑出来了，挑得那么仔细，我就猜你也不吃香菜。'),
+    ]},
   ]},
   n('他自己喝的还是保温杯里的粥。Eric把一块排骨夹到他饭盒盖上，他说了声谢谢，等Eric转过头去，又把那块排骨夹回了Eric碗里，Eric一直没发现。'),
   n('下午团长把我叫到白板前，给我看第四天那一格。'),
@@ -1537,8 +1552,16 @@ pre:[
   n('进门以后我把袖口翻过来，那半枚「土」字旁在灯底下淡淡的一层铅笔灰。我拿透明胶带把它贴住，免得蹭掉。'),
   /* 六 夜里醒着的人 */
   {bg:'bg_warehouse',fx:'none'},
-  n('我是在后半夜发现仓库屋顶有人的。团长让大家各自找地方睡一会儿，我躺下去，闭上眼，那一柜子经手人的名字就在眼皮底下排着队。'),
-  n('后门外面有一架铁梯子通到屋顶。Sunwoo坐在屋顶边沿上，两条腿垂下去，膝盖上摊着一块木板，木板上是一堆零件。他没开灯，借着码头那边的探照灯拧东西，光扫过来他拧一下，光扫过去他就停。'),
+  n('团长让大家各自找地方睡一会儿。我躺下去，闭上眼，那一柜子经手人的名字就在眼皮底下排着队。'),
+  {p:'后半夜了。',c:[
+    {t:'继续翻本子熬着。',tone:'cold',set:{nightOwl:1},then:[
+      n('我把本子拿到灯下又翻了几页，越翻越醒，索性披了件外套出去透气。'),
+    ]},
+    {t:'强迫自己先睡一会儿。',tone:'soft',set:{nightOwl:0},then:[
+      n('我把本子扣在胸口，逼自己数呼吸。迷糊了一阵，还是醒了，披了件外套出去透气。'),
+    ]},
+  ]},
+  n('我是在后半夜发现仓库屋顶有人的。后门外面有一架铁梯子通到屋顶。Sunwoo坐在屋顶边沿上，两条腿垂下去，膝盖上摊着一块木板，木板上是一堆零件。他没开灯，借着码头那边的探照灯拧东西，光扫过来他拧一下，光扫过去他就停。'),
   s('sunwoo','你也睡不着？'),
   me('你怎么知道上来的是我？'),
   s('sunwoo','Juyeon上梯子一步跨两级，Hyunjae上来之前会先喊一嗓子，Eric一路走一路说话。就你上得这么小心，跟怕把梯子踩坏了似的。'),
@@ -1798,8 +1821,13 @@ pre:[
     n('蜡块是夹在一份盒饭的饭盒盖里送出去的。'),
     s('hyunjae','布展的师傅，这是您的。'),
     n('我接过去，打开盖子，把蜡块按进盖子的凹槽里，再把盖子扣回去递还给他。'),
-    me('我不吃辣，麻烦给换一份。'),
-    n('他换了一份给我，推着车走了。我站在走廊里，端着那份不辣的盒饭，一时不知道该干什么，就打开吃了一口。米饭是凉的，菜是热的，他装的时候把菜和饭分成了两层。'),
+    {if:S=>S.flags.likeSpice===1,then:[
+      me('这份太淡了，麻烦换份重一点的。'),
+      n('他换了一份给我，推着车走了。我站在走廊里，端着那份加重了的盒饭，一时不知道该干什么，就打开吃了一口。米饭是凉的，菜是热的，他装的时候把菜和饭分成了两层。'),
+    ],else:[
+      me('我不吃辣，麻烦给换一份。'),
+      n('他换了一份给我，推着车走了。我站在走廊里，端着那份不辣的盒饭，一时不知道该干什么，就打开吃了一口。米饭是凉的，菜是热的，他装的时候把菜和饭分成了两层。'),
+    ]},
     n('照计划，Jacob扮成馆里的赞助人。可我推着木箱进大厅的时候就看见他了。走廊那头有一个穿深色西装的人，站在一幅画前面，背对着我。到了约好的时候，他准时出现在保安面前，抬起手腕看了一次表，保安被他缠着往休息室去了。'),
     n('过了晌午，Hyunjae又来了，推着小推车，车上只有一碗汤。'),
     s('hyunjae','刚才那份盒饭漏了汤，我给补过来。'),
@@ -2485,7 +2513,7 @@ ENGINE.CHAPTERS.ch1={id:'ch1',title:'第一章 · 屿城美术馆',start:'p0',ca
 const E=window.ENGINE;
 const KEY='touxin_carry_ch1';
 const MEM=['leader','sunwoo','hyunjae','juyeon','younghoon','q','new','kevin','jacob','eric'];
-const KEEP=/^(route_seed_|eric_breath$|left$|names$|way$|talk$)/;
+const KEEP=/^(route_seed_|eric_breath$|left$|names$|way$|talk$|likeSpice$|likeCilantro$|carryAlone$|nightOwl$)/;
 function pack(S,en){
   const flags={}; Object.keys(S.flags||{}).forEach(k=>{ if(KEEP.test(k)) flags[k]=S.flags[k]; });
   return {v:1,ch:S.ch,name:S.name||'',trust:Object.assign({},S.trust),tone:Object.assign({},S.tone),flags,ending:en?en.id:(S.endingId||null),at:Date.now()};
@@ -3315,6 +3343,8 @@ P.c3={label:'三 · 对账人',dayLabel:'三',time:'下午',place:'档城 · 茶
   me('你刚才不渴吗？'),
   s('hyunjae','渴啊。以前喝过一杯不该喝的，后来就再也不喝别人倒的了。走，前面有家锅贴，我刚才路过看见了。'),
   n('锅贴铺子很小，只有三张桌子。他一口气点了一大盘，老板娘下锅的时候他就站在灶边看。锅贴端上来，他先吃了两个，确认底是脆的，才把盘子往我面前推。'),
+  {if:S=>S.flags.likeSpice===1,then:[n('他在我碗边搁了一小碟辣油，说屿城的醋配辣油才对。')]},
+  {if:S=>S.flags.likeSpice===0,then:[n('老板娘递过来一碟辣油，他摆摆手说她不吃这个。')]},
   {p:'',c:[
     {t:'「你说的是哪一杯？」',tone:'soft',tr:{hyunjae:1},set:{askedCup:1},then:[
       s('hyunjae','以前在会所端盘子的时候，有一回酒会，一个客人从我托盘上拿了一杯，又递回来一杯，说你站了一晚上了，你也喝点。我就喝了一口。等我醒过来，人躺在储物间地上，围裙口袋里多了一块表。'),
@@ -3837,6 +3867,8 @@ P.c9={label:'九 · 沈眠',dayLabel:'九',time:'夜',place:'旧海关大楼后�
     n('那以后我半夜再出门，走廊尽头那扇门会开一条缝，等我回来，再轻轻合上。'),{set:{doorLock:1}}]},
   n('复审的事暂时压住以后，New说他去。'),
   s('leader','别一个人去。'),
+  {if:S=>S.flags.carryAlone===1,then:[n('我听着，没接话。踩点那晚我也说过同样的话，团长也是这么回的。')]},
+  {if:S=>S.flags.carryAlone===0,then:[n('我点了点头。一个人去的活，两个人总更稳一些。')]},
   s('juyeon','我跟着他。'),
   {bg:'bg2_street'},
   n('他们在十九号对面一家修车铺门口守了三个晚上。New跟修车铺老板借了个板凳，蹲着修一辆旧摩托，修得很慢。Juyeon坐在旁边什么都不干，就看着对面那栋楼。'),
@@ -3868,6 +3900,8 @@ P.c9={label:'九 · 沈眠',dayLabel:'九',time:'夜',place:'旧海关大楼后�
   s('shen','你是陈姨的儿子吧，老金老是管你叫小陈。'),
   s('hyunjae','我姓李，我纠正过他好多回了。'),
   n('沈眠在厨房里笑了一声，很短。Hyunjae煮了一锅挂面，沈眠那碗不放葱，Sunwoo那碗多放辣，其他人碗里各卧了一个蛋。Hyunjae自己那份是最后盛的，直接端着锅吃。'),
+  {if:S=>S.flags.likeCilantro===1,then:[n('我那碗边上多搁了一撮香菜，是他从楼下小卖部买回来的。')]},
+  {if:S=>S.flags.likeCilantro===0,then:[n('他给我盛面的时候，把香菜碟往旁边推了半寸。')]},
   {bg:'bg2_shen'},{show:'shen'},
   n('沈眠吃得很慢，用左手拿筷子。New坐在长桌拐角上，看着沈眠的左手看了很久，然后低下头。'),
   s('new','沈叔，那个遥控，后来好用吗？'),
@@ -4537,7 +4571,7 @@ function applyCarry(S,carry){
     Object.keys(S.trust).forEach(k=>{ const v=carry.trust&&carry.trust[k]; if(typeof v==='number') S.trust[k]=Math.max(0,Math.min(10,Math.round(v))); });
     if(carry.tone) Object.assign(S.tone,carry.tone);
     const cf=carry.flags||{};
-    Object.keys(cf).forEach(k=>{ if(/^route_seed_|^eric_breath$/.test(k)) f[k]=cf[k]; });
+    Object.keys(cf).forEach(k=>{ if(/^route_seed_|^eric_breath$|^(likeSpice|likeCilantro|carryAlone|nightOwl)$/.test(k)) f[k]=cf[k]; });
     if(cf.left) f.ch1Left=cf.left;
     if(Array.isArray(cf.names)) { f.ch1Names=cf.names.slice(); f.hcount=cf.names.length; }
     f.ch1End=carry.ending||null;
@@ -4755,6 +4789,8 @@ P.m4={label:'各自',dayLabel:'冬',time:'冬',place:'屿城 · 仓库',card:'�
   n('Hyunjae天天记账，那本账记得极细，连谁欠谁一包烟都记上了。记到后来他发现，这伙人互相欠来欠去，最后谁也不欠谁。'),
   n('Q那截红蜡快用完了，只剩指甲盖那么一小截。他没买新的，说用完了就不玩了，可那一小截一直揣在他兜里，始终没用完。'),
   n('Sunwoo睡不着就画钟，画的是小孩子画的那种，一个圈，两根针，底下一根柱子。他画了厚厚一沓，都塞在一个信封里。'),
+  {if:S=>S.flags.nightOwl===1,then:[n('有几回我半夜还醒着，仓库灯一亮，就看见他也在。')]},
+  {if:S=>S.flags.nightOwl===0,then:[n('我那阵子倒是睡得着，只有偶尔醒一回，才听见他在长桌那边翻纸。')]},
   n('New在教Eric修收音机，那是他爷爷传下来的老手艺。他教得极严，从接线的顺序教起，Eric学了两个礼拜才拧上一颗螺丝。'),
   n('Kevin在记那本「站着的位置」，已经记满了一本，最后一页空着，他说要留着。'),
   n('Jacob学会了一道菜，番茄炒蛋。他做了好多回，前面大半都糊了。终于做成的那一回，他端了一盘到仓库，全团都吃了。Hyunjae说了一句「能吃」，他高兴了好几天。'),
@@ -4794,6 +4830,8 @@ P.m4b={label:'那个冬天',dayLabel:'冬',time:'夜',place:'屿城',card:'常�
   W('hyunjae',[{show:'hyunjae'},
     n('Hyunjae教我包锅贴，说是冬天手冷，揉面正好暖手。我包的第一个漏了馅，第二个立不起来，他全收进自己那一盘，说这几个他包圆了。'),
     s('hyunjae','你别心疼，漏馅的煎出来最香，汤汁全流到锅底，结成一层脆的，我小时候就专门挑这种吃。'),
+    {if:S=>S.flags.likeCilantro===1,then:[s('hyunjae','蘸料里我给你多搁了香菜，你那天说要加的，我没忘。')]},
+    {if:S=>S.flags.likeCilantro===0,then:[s('hyunjae','蘸料里的香菜我单独盛了，你不爱吃就别沾到。')]},
     n('那天他在账本上记了一笔：某月某日，欠我锅贴零个。我问他记这个干什么，他说账要记全，零个也是一笔。'),
     s('hyunjae','这样等哪天你欠我的时候，前面已经有一整页了，看着就没那么吓人。')]),
   W('juyeon',[{show:'juyeon'},
@@ -5772,6 +5810,8 @@ B.eric=beat('eric',[
 B.hyunjae=beat('hyunjae',[
   n('回屿城的那天晚上，Hyunjae在仓库的长桌上摆了一桌菜。他数了一遍椅子，又出去搬回来一把，说老纪哪天说不定也会来坐坐，先给他留着。'),
   s('hyunjae','今天这锅汤我熬了一下午，你先喝一口，替我尝尝咸淡。在档城买的那袋红薯一个都没人吃，凉了以后我自己吃了三个，撑得我一宿没睡好。'),
+  {if:S=>S.flags.likeSpice===1,then:[s('hyunjae','汤底我放了姜和一点干辣椒，你爱吃辣我才敢搁。')]},
+  {if:S=>S.flags.likeSpice===0,then:[s('hyunjae','辣椒我一颗没搁，你那天说了不吃辣，我记着呢。')]},
   {p:'你尝了一口：',c:[
     {t:'「刚好。你也坐下吃吧。」',tone:'soft',tr:{hyunjae:2},set:{hyunjaeSat:1},then:[
       n('他愣了一下，把围裙解下来搭在椅背上，在我旁边那把椅子上坐下了。他做了这么多年饭，大家吃饭的时候他总站在灶台边，那天晚上是我头一回看他跟大家一块儿坐到最后。'),
@@ -5859,6 +5899,8 @@ X.c2b={label:'二 · 补白',dayLabel:'二',time:'夜',place:'立册库 · 入�
   {bg:'bg3_roof',show:'sunwoo'},
   n('那天夜里我睡不着，爬上了面馆的天台。老板娘的床单晾了一排，风一吹就鼓起来，再慢慢落回去。Sunwoo坐在水箱旁边，膝盖上摊着一张图纸，借着手机的光在画。'),
   s('sunwoo','你也睡不着啊？这楼隔音太差了，Hyunjae那呼噜我在顶上都听得见。'),
+  {if:S=>S.flags.nightOwl===1,then:[me('本来就睡不着，本子还摊在枕头边上。')]},
+  {if:S=>S.flags.nightOwl===0,then:[me('本来睡着了，醒了一回就上不来了。')]},
   me('他今天晚上没打呼。'),
   s('sunwoo','那就是我自己心里有动静。坐吧，这块地方我刚擦过，不收你钱。'),
   n('图纸上画的是一口钟的剖面，齿轮一个套着一个，旁边写满了小字。他说是他爸那口钟，凭记忆画了三年，每回画到中间都差一个齿轮，说着用笔尖点了点中间那个空着的圆。'),
@@ -5977,6 +6019,8 @@ X.c8b={label:'八 · 账底',dayLabel:'八',time:'夜',place:'立册库 · 最�
     s('leader','被抽掉的那个名字是我的。揭开，我的名字能回到索引上；就算不揭，我也已经在增补页上写过一回了，丢不了。我既是受益的那个人，也是被他改掉的那个人，这件事我说什么都不公道。你来定吧，你怎么定，我都跟着签。'),
     {bg:'bg3_roof',hide:1},
     n('那天晚上我把本子带上了天台。床单已经收了，晾衣绳空着，我坐在水箱旁边，把那几条证据从头抄了一遍，抄完叠成四折，揣进外套里面的口袋。'),
+    {if:S=>S.flags.carryAlone===1,then:[n('天台上没人。这类心事我习惯自己先消化完，再决定要不要开口。')]},
+    {if:S=>S.flags.carryAlone===0,then:[n('走上天台之前我在楼梯口停了一下，想过要不要喊个人上来，最后还是自己坐了下来。')]},
     i('揭开，一个老人守了四十年的册子要从头核一遍，明天的合册也可能要等。留着，那页纸上就一直少一个人。我想到天快亮，两头都放不下。'),
   ],else:[
     {bg:'bg2_street'},
